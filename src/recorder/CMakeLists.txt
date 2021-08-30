@@ -1,0 +1,29 @@
+cmake_minimum_required(VERSION 3.10)
+
+# set the project name
+project(Recorder LANGUAGES CXX)
+
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+# specify the C++ standard
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -pthread")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
+find_package(OpenCV REQUIRED)
+find_package(Protobuf REQUIRED)
+find_package(gflags REQUIRED)
+include_directories(${Protobuf_INCLUDE_DIRS})
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS record_data.proto)
+
+add_executable(recorder_main recorder_main.cc ${PROTO_SRCS} ${PROTO_HDRS})
+target_link_libraries(recorder_main ${OpenCV_LIBRARIES} ${Protobuf_LIBRARIES})
+
+add_executable(data_inspector data_inspector.cc ${PROTO_SRCS} ${PROTO_HDRS})
+target_link_libraries(data_inspector ${OpenCV_LIBRARIES} ${Protobuf_LIBRARIES} gflags)
