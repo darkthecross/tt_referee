@@ -17,13 +17,16 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 find_package(OpenCV REQUIRED)
 find_package(Protobuf REQUIRED)
 find_package(gflags REQUIRED)
+find_package(glog REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system filesystem)
 include_directories(${Protobuf_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS record_data.proto)
 
 add_executable(recorder_main recorder_main.cc ${PROTO_SRCS} ${PROTO_HDRS})
-target_link_libraries(recorder_main ${OpenCV_LIBRARIES} ${Protobuf_LIBRARIES})
+target_link_libraries(recorder_main ${OpenCV_LIBRARIES} ${Protobuf_LIBRARIES} ${Boost_LIBRARIES} glog gflags)
 
 add_executable(data_inspector data_inspector.cc ${PROTO_SRCS} ${PROTO_HDRS})
 target_link_libraries(data_inspector ${OpenCV_LIBRARIES} ${Protobuf_LIBRARIES} gflags)

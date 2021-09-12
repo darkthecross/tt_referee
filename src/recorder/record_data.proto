@@ -2,7 +2,12 @@ syntax = "proto3";
 
 package recorder;
 
+message FrameData {
+  int64 camera_id = 1;
+  int64 timestamp = 2;
+  bytes image = 3;
+}
+
 message RecordData {
-  int64 timestamp = 1;
-  bytes image = 2;
+  repeated FrameData frame_data = 1;
 }

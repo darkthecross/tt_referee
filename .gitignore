@@ -1,1 +1,4 @@
 build/
+data/
+Debug/
+Release/
