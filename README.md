@@ -23,6 +23,11 @@ sudo apt-get install libgflags-dev
 sudo apt install libgoogle-glog-dev
 ```
 
+```shell
+# opengl, glew, glfw
+sudo apt-get -y install libglu1-mesa-dev freeglut3-dev mesa-common-dev libglew-dev libglfw3-dev
+```
+
 Also, glog might not work with cmake out of the box. I added [Findglog.cmake](https://raw.githubusercontent.com/ceres-solver/ceres-solver/master/cmake/FindGlog.cmake) to `/usr/share/cmake-3.10/Modules`.
 
 ## Hardware
